@@ -26,7 +26,7 @@ First, create a file named ```Dockerfile``` in your project directory
 
 ### Step 2: Select base image
 
-Base image is the foundation of your application. For example: node, python, ubuntu, nginx, etc.
+Base image is the foundation of your application. Base images are loaded from Docker Hub, which is the most popular registry for storing and sharing Docker images. For example: node, python, ubuntu, nginx, etc.
 
 ```dockerfile
 # Using Node.js version 16
