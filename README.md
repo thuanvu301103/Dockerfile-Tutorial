@@ -28,7 +28,8 @@ First, create a file named ```Dockerfile``` in your project directory
 Base image is the foundation of your application. For example: node, python, ubuntu, nginx, etc.
 
 ```dockerfile
-FEOM node: 16
+# Using Node.js version 16
+FROM node: 16
 ```
 Base Image Classification
 - Official Base Images (Official Image): Provided and maintained by Docker or reputable organizations. For example:
@@ -38,3 +39,12 @@ Base Image Classification
 - Minimal Base Images: Images are optimized for capacity and contain only basic components. For example:
 	+ ```alpine```: A lightweight Linux image (~5MB), suitable for small applications.
 - Custom Base Images (Custom Image): Built by users to serve specific needs. For example: A base image contains company-specific tools or libraries.
+
+### Step 3: Create application folder in container
+
+Set up the working directory in the container. All the following commands will be executed in this directory.
+
+```dockerfile
+# Create application folder in container
+WORKDIR /usr/src/app
+```
