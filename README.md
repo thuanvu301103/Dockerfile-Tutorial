@@ -118,3 +118,17 @@ docker tag my-node-app myusername/myapp:latest
 	+ ```myusername```: Docker Hub account name.
 	+ ```myapp```: Name of the repository (application) you want to create.
 	+ ```latest```: Tag of image version (default).
+
+### Step 3: Push image to Docker Hub
+To push the image to Docker Hub, use the command:
+```bash
+docker push myusername/myapp:latest
+```
+
+### Step 4: Check the image and change visibility of the image on Docker Hub
+### Step 5: Pull Image from Docker Hub on Another Machine
+After the image is public, you can download it from any computer with the command:
+```bash
+docker pull myusername/myapp:latest
+```
+Then run the container as usual
