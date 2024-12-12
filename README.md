@@ -96,3 +96,25 @@ docker build -t my-node-app -f Dockerfile .
 ```bash
 docker run -d -p 3000:3000 my-node-app
 ```
+
+##  Public Docker image to Docker Hub
+
+### Step 1: Log in to Docker Hub from Terminal
+1. Use the following command to log in to Docker Hub:
+
+```bash
+docker login
+```
+2. Enter the username and password of the Docker Hub account.
+
+### Step 2: Name (tag) the Docker image
+Docker Hub requires images to be named in the format: ```<username>/<repository>:<tag>```
+For example: If your username is ```myusername``` and you want to create a ```myapp``` repository, then you need to name the image as follows:
+```bash
+docker tag my-node-app myusername/myapp:latest
+```
+- ```my-node-app```: Local image name.
+- ```myusername/myapp:latest```:
+	+ ```myusername```: Docker Hub account name.
+	+ ```myapp```: Name of the repository (application) you want to create.
+	+ ```latest```: Tag of image version (default).
