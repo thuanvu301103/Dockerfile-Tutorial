@@ -30,7 +30,7 @@ Base image is the foundation of your application. Base images are loaded from Do
 
 ```dockerfile
 # Using Node.js version 16
-FROM node: 16
+FROM node:16
 ```
 Base Image Classification
 - Official Base Images (Official Image): Provided and maintained by Docker or reputable organizations. For example:
@@ -81,4 +81,18 @@ Specify the command to run your application when the container starts.
 ```dockerfile
 # Define the command to run the application
 CMD ["npm", "start"]
+```
+
+## How to build and run containers
+
+1. Build Docker image: From the myapp directory (containing the dockerfile), run the command:
+
+```bash
+docker build -t my-node-app -f Dockerfile .
+```
+
+2. Run container:
+
+```bash
+docker run -d -p 3000:3000 my-node-app
 ```
