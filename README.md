@@ -1,5 +1,7 @@
 # Dockerfile-Tutorial
 
+Caution: This tutorial is written supposed that you are installing a Node.js application 
+
 ## Basic structure of Dockerfile
 
 - ```FROM```: Specify the base image (base image)
@@ -13,8 +15,7 @@
 ```
 myapp/
 |-- Dockerfile
-|-- app.py
-|-- requirements.txt
+|-- app
 ```
 
 ## Create a simple Dockerfile
@@ -48,3 +49,19 @@ Set up the working directory in the container. All the following commands will b
 # Create application folder in container
 WORKDIR /usr/src/app
 ```
+
+### Step 4: Copy Files to the Container
+
+Copy the necessary files from your local machine to the container. In this step, you can now install the necessary denpencies for the environment
+
+```dockerfile
+# Copy package.json and package-lock.json to the working directory
+COPY app/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code to the working directory
+COPY app/ ./
+```
+
