@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bank Statement</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="mt-4 mb-5 p-0 fw-bold fs-1">
+            <i class="bi bi-search"></i> CHECK BANK STATEMENT <i class="bi bi-file-earmark-text"></i>
+        </div>
+
+        <div class="mt-4 mb-4 p-0">
+            <form id="searchForm" class="d-flex flex-row w-100" method="GET" action="/search">
+                <!-- Search Data Input-->
+                <div class="bg-dark d-flex flex-grow-1 flex-column me-3 p-3 rounded-3">
+                    <!-- Search Input box Title-->
+                    <div class="mb-4 flex-grow-1 text-light fw-bold fs-5">
+                        Search by... <i class="bi bi-search"></i>
+                    </div>
+                    <!-- Date Search Input -->
+                    <div class="mb-2 flex-grow-1">
+                        <label for="datesearch" class="form-label text-light">Transaction Date</label>
+                        <input class="form-control"
+                               data-provide="datepicker"
+                               type="text"
+                               placeholder="Choose date..."
+                               id="datesearch">
+                    </div>
+                    <!-- Credit Search Input -->
+                    <div class="mb-2 flex-grow-1">
+                        <label for="creditsearch" class="form-label text-light">Credit</label>
+                        <input class="form-control"
+                               type="number"
+                               placeholder="Enter credits..."
+                               id="creditsearch"
+                               min="0">
+                    </div>
+                    <!-- Debit Search Input -->
+                    <div class="mb-2 flex-grow-1">
+                        <label for="debitsearch" class="form-label text-light">Debit</label>
+                        <input class="form-control"
+                               type="number"
+                               placeholder="Enter debits..."
+                               id="debitsearch"
+                               min="0">
+                    </div>
+                    <!-- Detail Search Input -->
+                    <div class="mb-2 flex-grow-1">
+                        <label for="detailsearch" class="form-label text-light">Transaction Detail</label>
+                        <input class="form-control"
+                               type="text"
+                               placeholder="Enter detail..."
+                               id="detailsearch">
+                    </div>
+                </div>
+
+                <!-- Filter Data Input and Submit Btn-->
+                <div class="d-flex flex-grow-1 flex-column">
+                    <div class="bg-dark d-flex flex-grow-1 flex-column p-3 rounded-3">
+                        <!-- Filter Input box Title-->
+                        <div class="mb-4 flex-grow-1 text-light fw-bold fs-5">
+                            Filter <i class="bi bi-funnel"></i>
+                        </div>
+                        <!-- Filter Date Input -->
+                        <div class="bg-dark d-flex flex-row w-100 flex-grow-1">
+                            <!-- Date Filter (from) Input -->
+                            <div class="mb-2 me-3 flex-grow-1">
+                                <label for="from-datefilter" class="form-label text-light">Start Transaction Date</label>
+                                <input class="form-control"
+                                       data-provide="datepicker"
+                                       type="text"
+                                       placeholder="Choose date..."
+                                       id="from-datefilter">
+                            </div>
+                            <!-- Date Filter (to) Input -->
+                            <div class="mb-2 flex-grow-1">
+                                <label for="to-datefilter" class="form-label text-light">End Transaction Date</label>
+                                <input class="form-control"
+                                       data-provide="datepicker"
+                                       type="text"
+                                       placeholder="Choose date..."
+                                       id="to-datefilter">
+                            </div>
+                        </div>
+
+                        <!-- Filter Credit Input -->
+                        <div class="d-flex flex-row w-100 flex-grow-1">
+                            <!-- Credit Filter (from) Input -->
+                            <div class="mb-2 me-3 flex-grow-1">
+                                <label for="from-creditfilter" class="form-label text-light">Start Credit Value</label>
+                                <input class="form-control"
+                                       type="number"
+                                       placeholder="Enter credits..."
+                                       id="from-creditfilter"
+                                       min="0">
+                            </div>
+                            <!-- Credit Filter (to) Input -->
+                            <div class="mb-2 flex-grow-1">
+                                <label for="to-creditfilter" class="form-label text-light">End Credit Value</label>
+                                <input class="form-control"
+                                       type="number"
+                                       placeholder="Enter credits..."
+                                       id="to-creditfilter"
+                                       min="0">
+                            </div>
+                        </div>
+
+                        <!-- Filter Debit Input -->
+                        <div class="d-flex flex-row w-100 flex-grow-1">
+                            <!-- Debit Filter (from) Input -->
+                            <div class="mb-2 me-3 flex-grow-1">
+                                <label for="from-debitfilter" class="form-label text-light">Start Debit Value</label>
+                                <input class="form-control"
+                                       type="number"
+                                       placeholder="Enter debits..."
+                                       id="from-debitfilter"
+                                       min="0">
+                            </div>
+                            <!-- Debit Filter (to) Input -->
+                            <div class="mb-2 flex-grow-1">
+                                <label for="to-debitfilter" class="form-label text-light">End Debit Value</label>
+                                <input class="form-control"
+                                       type="number"
+                                       placeholder="Enter debits..."
+                                       id="to-debitfilter"
+                                       min="0">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="d-flex mb-3 mt-4">
+                        <!--Limit display results-->
+                        <div class="d-flex justify-content-start flex-row w-50">
+                            <label for="limit" class="form-label me-2 w-25">Limit results: </label>
+                            <input class="form-control w-25"
+                                   type="number"
+                                   id="limit"
+                                   value="10"
+                                   min="10"
+                                   max="50">
+                        </div>
+
+                        <div class="d-flex justify-content-end w-50">
+                            <!-- Reset Button -->
+                            <button type="reset" class="btn btn-secondary me-2"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+                            <!-- Search Button -->
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="resultNum" class="w-25 mb-3">
+            Search for result!
+        </div>
+
+
+        <div class="mb-3 p-1 bg-secondary rounded-3">
+            <div class="table-responsive table-wrapper">
+                <table class="table table-bordered bg-light text-light custom-table mb-0">
+                    <thead class="rounded-3">
+                        <tr>
+                            <th class="bg-secondary text-white text-center">No.</th>
+                            <th class="bg-secondary text-white text-center">Date</th>
+                            <th class="bg-secondary text-white text-center">Credit</th>
+                            <th class="bg-secondary text-white text-center">Debit</th>
+                            <th class="bg-secondary text-white text-center">Transaction Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="5" class="text-center fs-5 mt-4 text-secondary" mb-4><i class="bi bi-file-earmark-excel"></i> No data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row w-100 justify-content-between mb-4">
+
+            <!-- Current Page -->
+            <div id="currPage" class="w-25">
+            </div>
+
+            <!-- Current Page -->
+            <div id="currPage" class="w-25">
+                <form id="currPageForm" class="d-flex justify-content-start flex-row" method="GET" action="/search">
+                    <button type="submit" class="btn btn-success">Go to page</button>
+                    <input class="form-control w-25"
+                           type="number"
+                           value="0"
+                           id="currPageInput"
+                           min="1" />
+                </form>
+            </div>
+
+            <!-- Table Page Navigator -->
+            <div class="d-flex flex-row w-25 justify-content-end">
+                <div class="ml-auto">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <!-- First Page Button -->
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="First" id="firstPage">
+                                    <span aria-hidden="true">&laquo;&laquo;</span> <!-- or use '<<' -->
+                                </a>
+                            </li>
+                            <!-- Previous Button -->
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous" id="prevPage">
+                                    <span aria-hidden="true">&laquo;</span> <!-- or use '<' -->
+                                </a>
+                            </li>
+                            <!-- Next Button -->
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next" id="nextPage">
+                                    <span aria-hidden="true">&raquo;</span> <!-- or use '>' -->
+                                </a>
+                            </li>
+                            <!-- Last Page Button -->
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Last" id="lastPage">
+                                    <span aria-hidden="true">&raquo;&raquo;</span> <!-- or use '>>' -->
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+        <!-- Footer Section -->
+        <footer class="mt-5 container-fluid">
+            <p>&copy; 2024 VNTWebsite. All Rights Reserved.</p>
+            <p><a href="privacy-policy.html">Privacy Policy</a> | <a href="contact.html">Contact Us</a></p>
+            <p>
+                Follow us on:
+                <a href="https://facebook.com" target="_blank">Facebook</a>,
+                <a href="https://twitter.com" target="_blank">Twitter</a>
+            </p>
+        </footer>
+
+        <style>
+            footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 20px;
+            }
+
+                footer a {
+                    color: white;
+                    text-decoration: none;
+                }
+
+                    footer a:hover {
+                        text-decoration: underline;
+                    }
+        </style>
+
+        <style>
+            /* Apply bg-secondary color to the table border */
+            .custom-table {
+                border: 2px solid #6c757d; /* bg-secondary color (gray) */
+            }
+
+                /* Apply bg-secondary color to the table cell borders */
+                .custom-table td, .custom-table th {
+                    border: 3px solid #6c757d; /* bg-secondary color (gray) */
+                }
+        </style>
+
+        <style>
+            /* Custom column width based on percentage */
+            .custom-table th, .custom-table td {
+                width: 20%; /* Set each column to 20% width */
+            }
+
+                /* Adjust specific columns if needed */
+                .custom-table th:nth-child(1), .custom-table td:nth-child(1) {
+                    width: 7%; /* 15% width for the first column */
+                }
+
+                .custom-table th:nth-child(2), .custom-table td:nth-child(2) {
+                    width: 10%; /* 25% width for the second column */
+                }
+
+                .custom-table th:nth-child(3), .custom-table td:nth-child(3) {
+                    width: 14%; /* 20% width for the third column */
+                }
+
+                .custom-table th:nth-child(4), .custom-table td:nth-child(4) {
+                    width: 14%; /* 20% width for the fourth column */
+                }
+
+                .custom-table th:nth-child(5), .custom-table td:nth-child(5) {
+                    width: 55%; /* 20% width for the fifth column */
+                }
+        </style>
+
+        <style>
+            /* Container for the table with fixed header */
+            .table-wrapper {
+                max-height: 1000px; /* Set the max height of the table */
+                overflow-y: auto; /* Enable vertical scrolling */
+                position: relative;
+            }
+
+                /* Fixed header styling */
+                .table-wrapper thead {
+                    position: sticky;
+                    top: 0;
+                    background-color: #6c757d; /* Optional: to match bg-secondary */
+                    z-index: 1; /* Ensures header stays on top */
+                }
+
+                /* Optional: Make header text white */
+                .table-wrapper th {
+                    color: white;
+                }
+
+                /* Optional: Adjust table to full width */
+                .table-wrapper table {
+                    width: 100%;
+                }
+        </style>
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap Datepicker JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script>
+            let savedIds = [];
+            let curr_page = 0;
+            let totalPages = 0;
+            let limit = 0;
+
+            function updatePagination() {
+                // Disable First and Previous buttons if on the first page
+                if (curr_page === 1 || curr_page === 0) {
+                    $('#firstPage').addClass('disabled');
+                    $('#prevPage').addClass('disabled');
+                    if (curr_page === 0) {
+                        $('#nextPage').addClass('disabled');
+                        $('#lastPage').addClass('disabled');
+                    }
+                } else {
+                    $('#firstPage').removeClass('disabled');
+                    $('#prevPage').removeClass('disabled');
+                }
+
+                // Disable Next and Last buttons if on the last page
+                if (curr_page === totalPages) {
+                    $('#nextPage').addClass('disabled');
+                    $('#lastPage').addClass('disabled');
+                } else {
+                    $('#nextPage').removeClass('disabled');
+                    $('#lastPage').removeClass('disabled');
+                }
+                // Update Current page on htlm
+                const currPage = $('#currPage');
+                currPage.empty();
+                currPage.append(`<p>Currently on page <span class="text-success fw-bold">${curr_page}</span>/${totalPages}</p>`);
+            }
+            // Initial setup
+            updatePagination();
+
+            function getRows(ids) {
+                $.ajax({
+                    url: '/search/get',
+                    method: 'GET',
+                    data: {
+                        ids: ids.join(','),
+                    },
+                    success: function (response) {
+
+                        // Update the table with the response data
+                        const tableBody = $('#tableBody');
+                        tableBody.empty();
+                        // Clear existing table rows
+                        response.data.forEach(row => {
+                            let tableRow = null;
+                            if (ids.length != 0) {
+                                tableRow = `
+                                <tr class="mb-0">
+                                    <td>${row[1]}</td>
+                                    <td class="text-center">${row[0].split('_')[0]}</td>
+                                    <td class="text-end">${row[2]}</td>
+                                    <td class="text-end">${row[3]}</td>
+                                    <td>${row[4]}</td>
+                                </tr> `;
+                            } else {
+                                tableRow = `<tr>
+                                                <td colspan="5" class="text-center fs-5 mt-4 text-secondary" mb-4><i class="bi bi-file-earmark-excel"></i> No data</td>
+                                            </tr>`;
+                            }
+                            tableBody.append(tableRow);
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            }
+
+            $(document).ready(function () {
+                $('#datesearch').datepicker({
+                    format: 'dd/mm/yyyy',
+                    autoclose: true
+                });
+                $('#from-datefilter').datepicker({
+                    format: 'dd/mm/yyyy',
+                    autoclose: true
+                });
+                $('#to-datefilter').datepicker({
+                    format: 'dd/mm/yyyy',
+                    autoclose: true
+                });
+
+                $('#searchForm').on('submit', function (e) {
+                    e.preventDefault();
+                    // Date data
+                    const fromDate = $('#from-datefilter').val();
+                    const toDate = $('#to-datefilter').val();
+                    const dateSearch = $('#datesearch').val();
+                    // Credit data
+                    const fromCredit = $('#from-creditfilter').val();
+                    const toCredit = $('#to-creditfilter').val();
+                    const creditSearch = $('#creditsearch').val();
+                    // Debit data
+                    const fromDebit = $('#from-debitfilter').val();
+                    const toDebit = $('#to-debitfilter').val();
+                    const debitSearch = $('#debitsearch').val();
+                    // Detail data
+                    const detailSearch = $('#detailsearch').val();
+                    // Limit the results row
+                    limit = parseInt($('#limit').val(), 10);
+                    // Make an AJAX request to the API
+                    $.ajax({
+                        url: '/search',
+                        method: 'GET',
+                        data: {
+                            // Date data
+                            fromDate: fromDate,
+                            toDate: toDate,
+                            dateSearch: dateSearch,
+                            // Credit data
+                            fromCredit: fromCredit,
+                            toCredit: toCredit,
+                            creditSearch: creditSearch,
+                            // Credit data
+                            fromDebit: fromDebit,
+                            toDebit: toDebit,
+                            debitSearch: debitSearch,
+                            // Detail data
+                            detailSearch: detailSearch,
+                            // Limit
+                            limit: limit,
+                        },
+                        success: function (response) {
+                            // Save the ids for later use
+                            savedIds = response.ids; // Save ids in a variable
+                            const currPage = $('#currPage');
+                            currPage.empty();
+                            if (savedIds.length != 0) {
+                                curr_page = 1;
+                                totalPages = Math.ceil(savedIds.length / limit * 1.0);
+                                currPage.append(`<p>Currently on page <span class="text-success fw-bold">${curr_page}</span>/${totalPages}</p>`);
+                            }
+                            updatePagination();
+
+                            // Update the table with the response data
+                            const tableBody = $('#tableBody');
+                            tableBody.empty();
+                            // Update the result number
+                            const resNum = $('#resultNum');
+                            resNum.empty();
+                            const content = `<p>Found <span class="text-success fw-bold">${response.ids.length}</span> result(s)</p>`;
+                            resNum.append(content);
+                            // Clear existing table rows
+                            let tableRow = null;
+                            if (response.ids.length == 0) {
+                                tableBody.empty();
+                                tableRow = `<tr>
+                                                <td colspan="5" class="text-center fs-5 mt-4 text-secondary" mb-4><i class="bi bi-file-earmark-excel"></i> No data</td>
+                                            </tr>`;
+                                tableBody.append(tableRow);
+                            } else {
+
+                                response.data.forEach(row => {
+
+                                    tableRow = `
+                                <tr class="mb-0">
+                                    <td>${row[1]}</td>
+                                    <td class="text-center">${row[0].split('_')[0]}</td>
+                                    <td class="text-end">${row[2]}</td>
+                                    <td class="text-end">${row[3]}</td>
+                                    <td>${row[4]}</td>
+                                </tr> `;
+
+                                    tableBody.append(tableRow);
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            console.error('Error fetching data:', error);
+                        }
+                    });
+                });
+
+                $('#currPageForm').on('submit', function (e) {
+                    e.preventDefault();
+                    let des_page = parseInt($('#currPageInput').val(), 10)
+                    if (curr_page != 0 && des_page <= totalPages) {
+                        curr_page = des_page;
+                        let page_ids = savedIds.slice(curr_page * limit - limit, curr_page * limit);
+                        getRows(page_ids);
+                        updatePagination();
+                    }
+                });
+
+                // Handle First Page button
+                $('#firstPage').click(function (e) {
+                    e.preventDefault();
+                    // Get ids of first page
+                    let page_ids = savedIds.slice(0, limit);
+                    getRows(page_ids);
+                    curr_page = 1; // Go to the first page
+                    updatePagination();
+                });
+
+                // Handle Previous button
+                $('#prevPage').click(function (e) {
+                    e.preventDefault();
+                    if (curr_page > 1) {
+                        // Add your logic to fetch the next page data here
+                        //console.log(savedIds);
+                        curr_page--; // Go to the next page
+                        let page_ids = savedIds.slice(curr_page * limit - limit, curr_page * limit);
+                        //console.log(curr_page * limit - limit, curr_page * limit, limit);
+                        //console.log("Page Ids: ", page_ids);
+                        getRows(page_ids);
+                        updatePagination();
+                    }
+                });
+
+                // Handle Next button
+                $('#nextPage').click(function (e) {
+                    e.preventDefault();
+                    if (curr_page < totalPages) {
+                        // Add your logic to fetch the next page data here
+                        //console.log(savedIds);
+                        let page_ids = savedIds.slice(curr_page * limit, curr_page * limit + limit);
+                        //console.log(curr_page * limit - 1, (curr_page * limit - 1) + limit, limit);
+                        //console.log("Page Ids: ", page_ids);
+                        getRows(page_ids);
+                        curr_page++; // Go to the next page
+                        updatePagination();
+                    }
+                });
+
+                // Handle Last Page button
+                $('#lastPage').click(function (e) {
+                    e.preventDefault();
+                    curr_page = totalPages; // Go to the last page
+                    updatePagination();
+                    let page_ids = savedIds.slice(totalPages * limit - limit, totalPages * limit);
+                    getRows(page_ids);
+                    // Add your logic to fetch the last page data here
+                });
+            });
+        </script>
+
+
+</body>
+</html>

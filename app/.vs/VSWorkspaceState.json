@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\bin",
+    "\\config",
+    "\\controllers",
+    "\\data",
+    "\\data\\data_file",
+    "\\models",
+    "\\public",
+    "\\routes",
+    "\\views"
+  ],
+  "PreviewInSolutionExplorer": false
+}

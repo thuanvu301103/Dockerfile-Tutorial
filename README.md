@@ -65,7 +65,7 @@ RUN npm install
 COPY app/ ./
 ```
 
-### Step 4: Expose Ports
+### Step 5: Expose Ports
 
 Expose the port that your application will run on.
 
