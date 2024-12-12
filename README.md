@@ -65,3 +65,20 @@ RUN npm install
 COPY app/ ./
 ```
 
+### Step 4: Expose Ports
+
+Expose the port that your application will run on.
+
+```dockerfile
+# Expose the port the app runs on
+EXPOSE 3000
+```
+
+### Step 6: Define the Command to Run the Application
+
+Specify the command to run your application when the container starts.
+
+```dockerfile
+# Define the command to run the application
+CMD ["npm", "start"]
+```
