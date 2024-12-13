@@ -148,3 +148,49 @@ Then run the container as usual
 4. Volume has not been deleted: Docker stores data in volumes, even when the container is deleted. This is very useful for preserving data, but if you don't manage it well, the volume will take up a lot of memory.
 
 5. Build cache: When building an image, Docker creates a cache for each step of the Dockerfile. If you don't clear the cache, the capacity will increase.
+
+### Docker memory optimization solution
+
+1. Clean up all redundant data
+Use the command below to clean up all unused images, containers, volumes and networks
+```bash
+docker system prune -a --volumes
+```
+- ```-a```: Delete all untagged or unused images.
+- ```--volumes```: Delete volumes that are no longer in use by any containers
+
+2. Delete stopped containers
+- List of stopped containers:
+```bash
+docker ps -a
+```
+- Delete all stopped containers:
+```bash
+docker container prune
+```
+
+3. Delete unnecessary images
+- List of all images:
+```bash
+docker images
+```
+- Delete a specific image:
+```bash
+docker rmi <image_id>
+```
+
+4. Delete dangling images
+Images without tags or no longer in use:
+```bash
+docker image prune
+```
+
+5. Delete volumes that are no longer in use
+- List of volumes:
+```bash
+docker volume ls
+```
+- Delete unused volumes:
+```bash
+docker volume prune
+```
