@@ -132,3 +132,19 @@ After the image is public, you can download it from any computer with the comman
 docker pull myusername/myapp:latest
 ```
 Then run the container as usual
+
+##  Solve Docker memory increase problem
+
+### Main reasons for increased Docker memory
+
+1. Layer cache from builds
+- Docker saves image layers for reuse in future builds.
+- Old classes are not automatically deleted, even if you rebuild or delete the container.
+
+2. Dangling images: Images that are not tagged or have no containers in use still exist on the system.
+
+3. Stopped containers: Stopped containers are not automatically deleted unless you use the ```--rm``` command when running the container.
+
+4. Volume has not been deleted: Docker stores data in volumes, even when the container is deleted. This is very useful for preserving data, but if you don't manage it well, the volume will take up a lot of memory.
+
+5. Build cache: When building an image, Docker creates a cache for each step of the Dockerfile. If you don't clear the cache, the capacity will increase.
