@@ -156,8 +156,8 @@ Use the command below to clean up all unused images, containers, volumes and net
 ```bash
 docker system prune -a --volumes
 ```
-	+ ```-a```: Delete all untagged or unused images.
-	+ ```--volumes```: Delete volumes that are no longer in use by any containers
+	- ```-a```: Delete all untagged or unused images.
+	- ```--volumes```: Delete volumes that are no longer in use by any containers
 
 2. Delete stopped containers
 	+ List of stopped containers:
