@@ -138,8 +138,8 @@ Then run the container as usual
 ### Main reasons for increased Docker memory
 
 1. Layer cache from builds
-- Docker saves image layers for reuse in future builds.
-- Old classes are not automatically deleted, even if you rebuild or delete the container.
+	+ Docker saves image layers for reuse in future builds.
+	+ Old classes are not automatically deleted, even if you rebuild or delete the container.
 
 2. Dangling images: Images that are not tagged or have no containers in use still exist on the system.
 
@@ -156,28 +156,28 @@ Use the command below to clean up all unused images, containers, volumes and net
 ```bash
 docker system prune -a --volumes
 ```
-- ```-a```: Delete all untagged or unused images.
-- ```--volumes```: Delete volumes that are no longer in use by any containers
+	+ ```-a```: Delete all untagged or unused images.
+	+ ```--volumes```: Delete volumes that are no longer in use by any containers
 
 2. Delete stopped containers
-- List of stopped containers:
-```bash
-docker ps -a
-```
-- Delete all stopped containers:
-```bash
-docker container prune
-```
+	+ List of stopped containers:
+	```bash
+	docker ps -a
+	```
+	+ Delete all stopped containers:
+	```bash
+	docker container prune
+	```
 
 3. Delete unnecessary images
-- List of all images:
-```bash
-docker images
-```
-- Delete a specific image:
-```bash
-docker rmi <image_id>
-```
+	+ List of all images:
+	```bash
+	docker images
+	```
+	+ Delete a specific image:
+	```bash
+	docker rmi <image_id>
+	```
 
 4. Delete dangling images
 Images without tags or no longer in use:
@@ -186,11 +186,11 @@ docker image prune
 ```
 
 5. Delete volumes that are no longer in use
-- List of volumes:
-```bash
-docker volume ls
-```
-- Delete unused volumes:
-```bash
-docker volume prune
-```
+	+ List of volumes:
+	```bash
+	docker volume ls
+	```
+	+ Delete unused volumes:
+	```bash
+	docker volume prune
+	```
