@@ -1,8 +1,10 @@
-# Dockerfile-Tutorial
+# Docker-Tutorial
 
 Caution: This tutorial is written supposed that you are installing a Node.js application 
 
-## Basic structure of Dockerfile
+## Dockerfile
+
+### Basic structure of Dockerfile
 
 - ```FROM```: Specify the base image (base image)
 - ```RUN```: Run commands while creating the image
@@ -11,20 +13,20 @@ Caution: This tutorial is written supposed that you are installing a Node.js app
 - ```CMD/ENTRYPOINT```: Specifies the command to be run when the container starts
 - ```EXPOSE```: Opens a port so the container can receive connections
 
-## Directory structure
+### Directory structure
 ```
 myapp/
 |-- Dockerfile
 |-- app
 ```
 
-## Create a simple Dockerfile
+### Create a simple Dockerfile
 
-### Step 1: Create a Docker file
+#### Step 1: Create a Docker file
 
 First, create a file named ```Dockerfile``` in your project directory
 
-### Step 2: Select base image
+#### Step 2: Select base image
 
 Base image is the foundation of your application. Base images are loaded from Docker Hub, which is the most popular registry for storing and sharing Docker images. For example: node, python, ubuntu, nginx, etc.
 
@@ -41,7 +43,7 @@ Base Image Classification
 	+ ```alpine```: A lightweight Linux image (~5MB), suitable for small applications.
 - Custom Base Images (Custom Image): Built by users to serve specific needs. For example: A base image contains company-specific tools or libraries.
 
-### Step 3: Create application folder in container
+#### Step 3: Create application folder in container
 
 Set up the working directory in the container. All the following commands will be executed in this directory.
 
@@ -50,7 +52,7 @@ Set up the working directory in the container. All the following commands will b
 WORKDIR /usr/src/app
 ```
 
-### Step 4: Copy Files to the Container
+#### Step 4: Copy Files to the Container
 
 Copy the necessary files from your local machine to the container. In this step, you can now install the necessary denpencies for the environment
 
@@ -65,7 +67,7 @@ RUN npm install
 COPY app/ ./
 ```
 
-### Step 5: Expose Ports
+#### Step 5: Expose Ports
 
 Expose the port that your application will run on.
 
@@ -74,7 +76,7 @@ Expose the port that your application will run on.
 EXPOSE 3000
 ```
 
-### Step 6: Define the Command to Run the Application
+#### Step 6: Define the Command to Run the Application
 
 Specify the command to run your application when the container starts.
 
@@ -83,7 +85,7 @@ Specify the command to run your application when the container starts.
 CMD ["npm", "start"]
 ```
 
-## How to build and run containers
+### How to build and run containers
 
 1. Build Docker image: From the myapp directory (containing the dockerfile), run the command:
 
@@ -97,9 +99,9 @@ docker build -t my-node-app -f Dockerfile .
 docker run -d -p 3000:3000 my-node-app
 ```
 
-##  Public Docker image to Docker Hub
+###  Public Docker image to Docker Hub
 
-### Step 1: Log in to Docker Hub from Terminal
+#### Step 1: Log in to Docker Hub from Terminal
 1. Use the following command to log in to Docker Hub:
 
 ```bash
@@ -107,7 +109,7 @@ docker login
 ```
 2. Enter the username and password of the Docker Hub account.
 
-### Step 2: Name (tag) the Docker image
+#### Step 2: Name (tag) the Docker image
 Docker Hub requires images to be named in the format: ```<username>/<repository>:<tag>```
 For example: If your username is ```myusername``` and you want to create a ```myapp``` repository, then you need to name the image as follows:
 ```bash
@@ -119,23 +121,23 @@ docker tag my-node-app myusername/myapp:latest
 	+ ```myapp```: Name of the repository (application) you want to create.
 	+ ```latest```: Tag of image version (default).
 
-### Step 3: Push image to Docker Hub
+#### Step 3: Push image to Docker Hub
 To push the image to Docker Hub, use the command:
 ```bash
 docker push myusername/myapp:latest
 ```
 
-### Step 4: Check the image and change visibility of the image on Docker Hub
-### Step 5: Pull Image from Docker Hub on Another Machine
+#### Step 4: Check the image and change visibility of the image on Docker Hub
+#### Step 5: Pull Image from Docker Hub on Another Machine
 After the image is public, you can download it from any computer with the command:
 ```bash
 docker pull myusername/myapp:latest
 ```
 Then run the container as usual
 
-##  Solve Docker memory increase problem
+### Solve Docker memory increase problem
 
-### Main reasons for increased Docker memory
+#### Main reasons for increased Docker memory
 
 1. Layer cache from builds
 	+ Docker saves image layers for reuse in future builds.
@@ -149,7 +151,7 @@ Then run the container as usual
 
 5. Build cache: When building an image, Docker creates a cache for each step of the Dockerfile. If you don't clear the cache, the capacity will increase.
 
-### Docker memory optimization solution
+#### Docker memory optimization solutions
 
 1. Clean up all redundant data
 Use the command below to clean up all unused images, containers, volumes and networks
@@ -194,3 +196,5 @@ docker image prune
 	```bash
 	docker volume prune
 	```
+
+## Docker Compose
