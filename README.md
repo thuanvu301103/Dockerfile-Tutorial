@@ -258,3 +258,34 @@ volumes:  # Define named volumes
 Detailed Explanation of Each Section:
 
 1. ```version```: Specifies the version of the Docker Compose file format. The most common version is 3.8. Ensure compatibility with your Docker Engine
+2. ```services```: Defines the services (containers) in your application. Each service represents a container and includes its image, ports, volumes, and other settings.
+3. ```image```: Specifies the Docker image to use for the service.
+4. ```ports```: Maps ports from the container to the host. Structure: ```host_port:container_port```
+
+### Start the Application
+1. Open a terminal and navigate to the directory containing the ```docker-compose.yml file```.
+2. Run the command:
+```bash
+docker-compose up
+```
+Use the -d flag to run in detached mode (background):
+```bash
+docker-compose up -d
+```
+### Manage Containers
+- Check service status:
+```bash
+docker-compose ps
+```
+- Stop all services:
+```bash
+docker-compose down
+```
+- Remove services but retain data (volumes):
+```bash
+docker-compose down --volumes
+```
+- View logs:
+```bash
+docker-compose logs -f
+```
