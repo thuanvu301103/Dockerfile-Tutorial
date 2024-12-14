@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:  # Define a web server service
+    image: nginx:latest  # Use the official Nginx image
+    ports:
+      - "8080:80"  # Map host port 8080 to container port 80
+    volumes:
+      - ./html:/usr/share/nginx/html  # Mount local "html" folder to the Nginx HTML directory
+    depends_on:
+      - db  # Start the "db" service before this service
+
+  db:  # Define a database service
+    image: mysql:5.7  # Use the MySQL 5.7 image
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword  # Set root password
+      - MYSQL_DATABASE=mydatabase  # Create a default database
+    volumes:
+      - db_data:/var/lib/mysql  # Persist MySQL data using a named volume
+
+volumes:  # Define named volumes
+  db_data:

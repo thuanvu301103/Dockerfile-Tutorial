@@ -198,3 +198,63 @@ docker image prune
 	```
 
 ## Docker Compose
+
+Docker Compose is a tool used to define and manage multi-container applications in Docker. Instead of running individual containers with the docker run command, Docker Compose allows you to define the configuration of all containers in a YAML file, typically named ```docker-compose.yml```. You can then start, stop, or manage the entire application with just a few commands.
+
+### Basic Structure of Docker Compose file
+
+```yaml
+version: '3.8'  # Specify the Docker Compose file version (ensure compatibility with your Docker Engine)
+
+services:  # Define the services (containers) that make up your application
+  service_name:  # Name of the service (e.g., "web", "db", etc.)
+    image: image_name:tag  # The Docker image and its version/tag (e.g., nginx:latest)
+    build:  # (Optional) If building the image from a Dockerfile, specify the context or Dockerfile
+      context: ./path_to_context  # Path to the build context
+      dockerfile: Dockerfile  # (Optional) Specify the Dockerfile if not named "Dockerfile"
+    ports:  # Map container ports to host ports
+      - "host_port:container_port"
+    environment:  # Set environment variables
+      - ENV_VAR_NAME=value
+    volumes:  # Mount host directories or volumes into the container
+      - ./local_path:/container_path
+    depends_on:  # Define service dependencies (ensures this service starts after the dependencies)
+      - dependent_service_name
+    command:  # (Optional) Override the default command of the Docker image
+      - "custom_command"
+
+networks:  # (Optional) Specify custom networks for the services
+  default:  # Define a default network or custom ones as needed
+    driver: bridge  # Network driver type
+```
+
+Example:
+
+```yaml
+version: '3.8'
+
+services:
+  web:  # Define a web server service
+    image: nginx:latest  # Use the official Nginx image
+    ports:
+      - "8080:80"  # Map host port 8080 to container port 80
+    volumes:
+      - ./html:/usr/share/nginx/html  # Mount local "html" folder to the Nginx HTML directory
+    depends_on:
+      - db  # Start the "db" service before this service
+
+  db:  # Define a database service
+    image: mysql:5.7  # Use the MySQL 5.7 image
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword  # Set root password
+      - MYSQL_DATABASE=mydatabase  # Create a default database
+    volumes:
+      - db_data:/var/lib/mysql  # Persist MySQL data using a named volume
+
+volumes:  # Define named volumes
+  db_data:
+```
+
+Detailed Explanation of Each Section:
+
+1. ```version```: Specifies the version of the Docker Compose file format. The most common version is 3.8. Ensure compatibility with your Docker Engine
